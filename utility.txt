@@ -1,51 +1,57 @@
 F2 bios
 esc + F12 boot menu
-
-https://github.com/massgravel/Microsoft-Activation-Scripts
-	irm https://massgrave.dev/get | iex
-
-debloat
-https://christitus.com/debloat-windows-10-2020/
+(lenovo)
 
 
-	powershell
-	https://christitus.com/debloat-windows-10-2020/
-		debloat app
-			iwr -useb https://christitus.com/win | iex
-			
+ATIVAR WINDOWS
+	ref: https://github.com/massgravel/Microsoft-Activation-Scripts
+	comando em powershell: irm https://massgrave.dev/get | iex
 
-	https://learn.microsoft.com/en-us/powershell/module/appx/get-appxpackage?view=windowsserver2022-ps
-	https://community.spiceworks.com/topic/2226735-debloating-windows-10-enterprise-after-upgrade
+DEBLOAT
+	>>> aplicativo de debloat
 
-		search for apps
-			Get-AppxPackage
+	ref: https://christitus.com/debloat-windows-10-2020/
+	comando em powershell: iwr -useb https://christitus.com/win | iex
+--------------------------------------------------------------------------------------------------------------------
+	>>> remover apps do sistema (cortana, pessoas, gamebar)
+	
+	ref: https://learn.microsoft.com/en-us/powershell/module/appx/get-appxpackage?view=windowsserver2022-ps
+	ref: https://community.spiceworks.com/topic/2226735-debloating-windows-10-enterprise-after-upgrade
 
-			Get-AppxPackage | select name | sort name
+	procurar aplicativos em powershell: Get-AppxPackage | select name | sort name
+	remover um aplicativo em powershell: remove apps manuallyet-AppxPackage -allusers *NomeDoAppAqui* | Remove-AppxPackage
+--------------------------------------------------------------------------------------------------------------------
+	>>> desabilitar serviços automáticos (bloquear melhor que inicialização automática do gerenciador de tarefas)
+	
+	abrir janela de serviços: win > "serviços"
+	abrir janela de serviços: win+r > "services.msc"
+	
+	verificar por modo de inicialização
+		automático - abre quando quiser sem permissão de usuário
+		manual - abre quando é chamado
+		desativado - nunca vai abrir
+	
+	mudar modo de inicialização: clique direito > propriedades > "modo de inicialização"
+	parar execução do app: clique direito > propriedades > "parar"
 
-		remove apps manually
-			Get-AppxPackage -allusers *APP* | Remove-AppxPackage
-			
+--------------------------------------------------------------------------------------------------------------------
+	>>> propriedades do sistema para desativar recursos visuais
+	
+	abrir janela de desempenho: win > sysdm.cpl > aba "avançado" > tópico desempenho "configurações"
 
-	win+r
-		serviços
-			services.msc
+--------------------------------------------------------------------------------------------------------------------
 		
+caráctere vazio em ASCII
+ALT + 2800
+ALT + 255
 
-	start menu
-		propriedades do sistema
-			sysdm.cpl
-		
-
-blank spaces ascii
-2800
-255
-
+4k: 
 3840 2160
+
+full hd wide:
 2560 1080
 
 932242860
-
-haru.sales@senacsp.edu.br
 
 🤔
 
@@ -89,7 +95,6 @@ haru.sales@senacsp.edu.br
 
 ԅ(≖‿≖ԅ)
 
-"­ " OR " " invisible chr ALT +  2800 OR 255
 ノ up/down hand
 っ point hand
 ・ middle dot
