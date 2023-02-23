@@ -1,0 +1,102 @@
+F2 bios
+esc + F12 boot menu
+
+https://github.com/massgravel/Microsoft-Activation-Scripts
+	irm https://massgrave.dev/get | iex
+
+debloat
+https://christitus.com/debloat-windows-10-2020/
+
+
+	powershell
+	https://christitus.com/debloat-windows-10-2020/
+		debloat app
+			iwr -useb https://christitus.com/win | iex
+			
+
+	https://learn.microsoft.com/en-us/powershell/module/appx/get-appxpackage?view=windowsserver2022-ps
+	https://community.spiceworks.com/topic/2226735-debloating-windows-10-enterprise-after-upgrade
+
+		search for apps
+			Get-AppxPackage
+
+			Get-AppxPackage | select name | sort name
+
+		remove apps manually
+			Get-AppxPackage -allusers *APP* | Remove-AppxPackage
+			
+
+	win+r
+		serviços
+			services.msc
+		
+
+	start menu
+		propriedades do sistema
+			sysdm.cpl
+		
+
+blank spaces ascii
+2800
+255
+
+3840 2160
+2560 1080
+
+932242860
+
+haru.sales@senacsp.edu.br
+
+🤔
+
+(●'◡'●)
+(・ω ・)
+(っˆڡˆς)
+
+ԅ(≖‿≖ԅ)
+⊂(•‿•)っ
+
+⇘ ⇓ ⇙
+⇒   ⇐
+⇗ ⇑ ⇖
+
+⊂ʕ•ᴥ•⊂ʔ
+ʕっ•ᴥ•ʔっ
+ʕ˵•ᴥ•˵ʔ
+ʕ•ᴥ•˵ ʔ
+˵.-.˵
+☭
+( ͡° ͜ʖ ͡°)
+(˵ ͡° ͜ʖ ͡°˵)
+( ͡ ° ͜ʖ ͡°)
+(ง ͠° ͟ʖ ͡°)ง
+(  ͠° ͟ʖ ͡°)っ
+ʕ  ͠° ͟ʖ ͡°ʔ
+ʕ ͡ ° ͜ʖ ͡°ʔ
+ԅʕ•ᴥ•ԅʔ
+ʕっ•ᴥ•ʔっ
+ʕง•ᴥ•ʔง
+ʕノ•ᴥ•ʔノ ︵ ┻━┻
+┬─┬ノʕ•ᴥ•ノʔ
+
+( •̀ o •́ )ง
+(╯•̀ o •́）╯︵ (\ . o .)\
+
+¯\_(._. )_/¯
+¯\_(.-. )_/¯
+¯\_( ;-;)_/¯
+¯\_(ツ)_/¯
+
+ԅ(≖‿≖ԅ)
+
+"­ " OR " " invisible chr ALT +  2800 OR 255
+ノ up/down hand
+っ point hand
+・ middle dot
+• middle dog+
+ԅ picky arm
+ω
+ง    pch hand
+¯ ALT + 0175
+™ ALT + 0153
+© ALT + 0169
