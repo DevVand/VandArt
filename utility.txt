@@ -19,7 +19,7 @@ DEBLOAT
 	ref: https://community.spiceworks.com/topic/2226735-debloating-windows-10-enterprise-after-upgrade
 
 	procurar aplicativos em powershell: Get-AppxPackage | select name | sort name
-	remover um aplicativo em powershell: remove apps manuallyet-AppxPackage -allusers *NomeDoAppAqui* | Remove-AppxPackage
+	remover um aplicativo em powershell: AppxPackage -allusers *NomeDoAppAqui* | Remove-AppxPackage
 --------------------------------------------------------------------------------------------------------------------
 	>>> desabilitar serviços automáticos (bloquear melhor que inicialização automática do gerenciador de tarefas)
 	
@@ -40,7 +40,10 @@ DEBLOAT
 	abrir janela de desempenho: win > sysdm.cpl > aba "avançado" > tópico desempenho "configurações"
 
 --------------------------------------------------------------------------------------------------------------------
+
+https://learn.microsoft.com/en-us/windows/package-manager/winget/source
 		
+--------------------------------------------------------------------------------------------------------------------
 caráctere vazio em ASCII
 ALT + 2800
 ALT + 255
