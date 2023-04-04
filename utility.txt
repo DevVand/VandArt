@@ -2,48 +2,8 @@ F2 bios
 esc + F12 boot menu
 (lenovo)
 
+----------------------------------------------------------------------------------------------------------
 
-ATIVAR WINDOWS
-	ref: https://github.com/massgravel/Microsoft-Activation-Scripts
-	comando em powershell: irm https://massgrave.dev/get | iex
-
-DEBLOAT
-	>>> aplicativo de debloat
-
-	ref: https://christitus.com/debloat-windows-10-2020/
-	comando em powershell: iwr -useb https://christitus.com/win | iex
---------------------------------------------------------------------------------------------------------------------
-	>>> remover apps do sistema (cortana, pessoas, gamebar)
-	
-	ref: https://learn.microsoft.com/en-us/powershell/module/appx/get-appxpackage?view=windowsserver2022-ps
-	ref: https://community.spiceworks.com/topic/2226735-debloating-windows-10-enterprise-after-upgrade
-
-	procurar aplicativos em powershell: Get-AppxPackage | select name | sort name
-	remover um aplicativo em powershell: AppxPackage -allusers *NomeDoAppAqui* | Remove-AppxPackage
---------------------------------------------------------------------------------------------------------------------
-	>>> desabilitar serviços automáticos (bloquear melhor que inicialização automática do gerenciador de tarefas)
-	
-	abrir janela de serviços: win > "serviços"
-	abrir janela de serviços: win+r > "services.msc"
-	
-	verificar por modo de inicialização
-		automático - abre quando quiser sem permissão de usuário
-		manual - abre quando é chamado
-		desativado - nunca vai abrir
-	
-	mudar modo de inicialização: clique direito > propriedades > "modo de inicialização"
-	parar execução do app: clique direito > propriedades > "parar"
-
---------------------------------------------------------------------------------------------------------------------
-	>>> propriedades do sistema para desativar recursos visuais
-	
-	abrir janela de desempenho: win > sysdm.cpl > aba "avançado" > tópico desempenho "configurações"
-
---------------------------------------------------------------------------------------------------------------------
-
-https://learn.microsoft.com/en-us/windows/package-manager/winget/source
-		
---------------------------------------------------------------------------------------------------------------------
 caráctere vazio em ASCII
 ALT + 2800
 ALT + 255
@@ -53,8 +13,6 @@ ALT + 255
 
 full hd wide:
 2560 1080
-
-932242860
 
 🤔
 
@@ -108,3 +66,9 @@ full hd wide:
 ¯ ALT + 0175
 ™ ALT + 0153
 © ALT + 0169
+
+🤸 
+
+
+
+                  🏌️‍♀️ 🦽
