@@ -1,0 +1,28 @@
+----------------------------------------------------------------------------------------------------------
+
+> unninstall system apps <
+
+-install ADB drivers
+
+-open PowerShell
+>go to adb addon folder
+	cd C:\Users\S2Har\Desktop\utility\android debloat\adb
+
+>start adb app:
+	./adb shell
+
+COMMANDS:
+	>see apps
+		pm list packages
+		pm list packages | grep APPNAME
+		examples:
+		pm list packages | grep samsung
+		pm list packages | grep google
+	
+	>unninstall app
+		pm uninstall --user 0 APPNAME
+		examples:
+		pm uninstall --user 0 com.samsung.android.app.camera.sticker.stamp.preload
+		pm uninstall --user 0 com.samsung.android.kidsinstaller
+		
+----------------------------------------------------------------------------------------------------------
