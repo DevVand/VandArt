@@ -1,0 +1,139 @@
+
+<canvas id="canvas1" width="500" height="500"> </canvas>
+
+<script>t=0;
+
+    var canvas = document.querySelector("canvas");
+    var pincel = canvas.getContext('2d');
+
+    var pi = Math.PI;
+    var rnd = Math.random;
+    var cos = Math.cos;
+    var sin = Math.sin;
+    var min = Math.min;
+    var max = Math.max;
+
+    mx = -50;
+    my = -50;
+    mouseClick = false;
+
+    function dist(x1,y1,x2,y2){ return Math.sqrt( Math.pow(x1-x2,2) + Math.pow(y1-y2,2) );}
+    function lerp(a,b,t){ return a+(b-a)*t; }
+    function move(o){ o.x=o.x+o.vx; o.y=o.y+o.vy; }
+
+    document.addEventListener('mousemove', (event) => {
+        mx = event.pageX - canvas.offsetLeft;
+        my = event.pageY - canvas.offsetTop;
+    });
+    document.addEventListener('mousedown', (event) => {
+        mouseClick = true;
+    });
+    document.addEventListener('mouseup', (event) => {
+        mouseClick = false;
+    });
+
+    
+    const particles = new Array();
+    firstVelocity = 3;
+
+    
+
+    
+    function new_ptri(x_,y_,r_,spread){
+        let object = new PTri(x_,y_,r_,spread);
+        particles.push(object);
+    }
+
+    class PTri{
+        constructor(x_, y_, r_,spread) {
+            let ang_=rnd()*pi*2;
+            this.x=x_,
+            this.y=y_,
+            this.ang=rnd()*pi,
+            this.angv=rnd()*2-1,
+            this.c="white",
+            this.vx= cos(ang_)*spread,
+            this.vy= sin(ang_)*spread,
+            this.r=rnd()*r_,
+            this.t=20
+        }
+
+        move(o){
+            move(o);
+            o.vx=o.vx*.95
+            o.vy=o.vy*.95;
+            o.angv=o.angv*.92;
+            o.ang=o.ang+o.angv;
+            if (o.t<5){
+                o.r=o.r/1.1  ;
+                if (t%5==0) { o.c=min(o.c-(o.c>1 ? 1 : 0),15);}
+            }
+        
+            o.t=o.t-1+rnd();
+            if (o.r<1) { return true; }
+        }
+
+        draw(o){
+            let a=o.ang, b=o.ang + (2/3*pi), c=o.ang+(4/3*pi)
+            let xa=cos(a),xb=cos(b),xc=cos(c),ya=sin(a),yb=sin(b),yc=sin(c)
+            pincel.beginPath();
+            pincel.moveTo(o.x+xa*o.r, o.y+ya*o.r);
+            pincel.lineTo(o.x+xb*o.r, o.y+yb*o.r);
+            pincel.lineTo(o.x+xc*o.r, o.y+yc*o.r);
+            pincel.closePath();
+            pincel.fillStyle="white"
+            pincel.fill();
+        }
+
+    }
+
+    class Particle {    
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.vx = cos((Math.PI*2)*rnd()) * ((firstVelocity-.1) * (.1+rnd()));
+            this.vy = sin((Math.PI*2)*rnd()) * ((firstVelocity-.1) * (.1+rnd()));
+            this.radius = 40;
+            this.alpha = 1;
+            this.t = 20;
+
+            /*
+            pincel.fillStyle = "rgba(255,255,255,"+p.alpha+")";
+            pincel.beginPath();
+            pincel.arc(p.x,p.y,p.radius,0,Math.PI*2,false)
+            pincel.fill();
+            pincel.closePath();
+            */
+        }
+    }
+
+    window.requestAnimationFrame(gameLoop)
+    function gameLoop() {
+        if(mouseClick){
+            for (let index = 0; index < 1; index++) {
+                new_ptri(mx,my,20,5);
+            }
+        }
+
+        pincel.fillStyle = "black";
+        pincel.fillRect(0,0,500,500)
+
+        //particles.forEach((p) => console.log(p.x));
+
+        
+        for (let index = particles.length-1; index>0 ; index--) {
+            let p = particles[index];
+            //console.log(p.x);
+            if(p.move(p)){ 
+                particles.splice(index,1);
+            }
+            p.draw(p);
+        }
+        
+
+        //pincel.arc(mouseX,mouseY,40,0,Math.PI*2,false)
+        //pincel.fill();
+        t+=1;
+        window.requestAnimationFrame(gameLoop)
+    }
+</script>

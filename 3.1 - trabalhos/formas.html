@@ -1,0 +1,140 @@
+
+<!--
+FEITO POR
+HARU SALES
+-->
+
+<!DOCTYPE html>
+<html lan="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<!--html feito nas coxas--------------------------------------------------------------------------------->
+<style>
+    div, h1, h3, p{
+        width: fit-content;
+        margin: auto;
+        user-select: none;
+    }
+    p{
+        font-size: 4em;
+    }
+</style>
+<body>
+    
+<div>
+    <h3 >feito por</h3>
+    <h1 >Haru Sales</h1>
+    <canvas id="canvas1" width="500" height="500"> </canvas>
+    <p>Formas</p>
+</div>
+
+<!--código----------------------------------------------------------------------------------------------->
+<script>t=0;
+
+    var canvas = document.querySelector("canvas");
+    var pincel = canvas.getContext('2d');
+
+    //funções renomeadas
+    var pi = Math.PI;
+    var cos = Math.cos;
+    var sin = Math.sin;
+    var min = Math.min;
+    var max = Math.max;
+
+    //input do mouse
+    mx = -50;
+    my = -50;
+    document.addEventListener('mousemove', (event) => {
+        mx = event.pageX - canvas.offsetLeft;
+        my = event.pageY - canvas.offsetTop;
+    });
+
+    let r = 50;
+    let cubeSize = 80;
+
+    //gameloop ------------------------------------------------------------
+    window.requestAnimationFrame(gameLoop)
+    function gameLoop() {
+        pincel.fillStyle = "white";
+        pincel.fillRect(0,0,500,500)
+
+        // pacmans --------------------------------------------------------
+        let pos = 500/4;
+        draw_pacman(pos-(pos/2),pos*.75,2,"green");
+        draw_pacman(pos*2-(pos/2),pos*.75,0,"blue");
+        draw_pacman(pos*3-(pos/2),pos*.75,3,"red");
+        draw_pacman(pos*4-(pos/2),pos*.75,1,"black");
+
+        
+        pos = 500/2;
+        //pacman com a posição do mouse
+        let angle = Math.atan2(my-pos, mx-(pos*.8));
+        draw_pacman(pos,pos*.9, angle.map(0,pi*2,0,4),"gray");
+
+        
+        // cubos 3d -------------------------------------------------------
+        draw_cube(pos/2/2,pos*1.4,7*pi/4,cubeSize*.75);
+        
+        //cubo com a posição do mouse
+        angle = Math.atan2(my-(pos+(pos/2/2))-cubeSize/2, mx-(pos*1.2)-cubeSize/2);
+        draw_cube(pos+(pos/2/2),pos*1.4,max(min(angle,0),-pi/2),cubeSize*.75);
+        
+        window.requestAnimationFrame(gameLoop)
+    }
+
+    //desenha um pacman para a direita e adiciona rotação com rotationAmount
+    function draw_pacman(x, y, rotationAmount, color){
+        pincel.fillStyle=color;
+        pincel.beginPath();
+            pincel.moveTo(x,y);
+            pincel.arc(x,y,r,(pi/4)+(pi/2*rotationAmount),(-pi/4)+(pi/2*rotationAmount));
+        pincel.closePath();
+        pincel.fill();
+    }
+
+    //desenha um cubo com perspectiva baseada num ângulo e distância
+    function draw_cube(x,y,angle, distance){
+
+        let top=0,left=0;
+        let bottom=cubeSize,right=cubeSize;
+
+        pincel.fillStyle="green";
+        pincel.beginPath();
+            pincel.moveTo(x+left,y+top);
+            pincel.lineTo(x+right,y+top);
+            pincel.lineTo(x+right,y+bottom);
+            pincel.lineTo(x+left,y+bottom);
+        pincel.closePath();
+        pincel.fill();
+        
+        pincel.fillStyle="yellow";
+        pincel.beginPath();
+            pincel.moveTo(x+left,y+top);
+            pincel.lineTo(x+left + (cos(angle)*distance),y+top + sin(angle)*distance);
+            pincel.lineTo(x+right + (cos(angle)*distance),y+top + sin(angle)*distance);
+            pincel.lineTo(x+right,y+top);
+        pincel.closePath();
+        pincel.fill();
+        
+        pincel.fillStyle="blue";
+        pincel.beginPath();
+            pincel.moveTo(x+right,y+top);
+            pincel.lineTo(x+right + (cos(angle)*distance),y+top + sin(angle)*distance);
+            pincel.lineTo(x+right + (cos(angle)*distance),y+bottom + sin(angle)*distance);
+            pincel.lineTo(x+right,y+bottom);
+        pincel.closePath();
+        pincel.fill();
+    }
+
+    //sim roubei essa função
+    Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+        return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+</script>
+</body>
