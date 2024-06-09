@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script>
+            
+        var pi = Math.PI;
+        var rnd = Math.random;
+        var cos = Math.cos;
+        var sin = Math.sin;
+        var min = Math.min;
+        var max = Math.max;
+        function dist(x1,y1,x2,y2){ return Math.sqrt( Math.pow(x1-x2,2) + Math.pow(y1-y2,2) );}
+        function lerp(a,b,t){ return a+(b-a)*t; }
+
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set initial canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var x = canvas.width / 2;
+        var y = canvas.height / 2;
+        var size = 0;
+        var maxSize = Math.min(canvas.width*.6, canvas.height*.6);
+        var angle = 0;
+        var angleSpeed = 0.005;
+        var speedX = 0.005;
+        var speedY = 0.006;
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            maxSize = Math.min(canvas.width * .6, canvas.height * .6);
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        function draw() {
+            size = lerp(size, maxSize, 0.1);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the image
+            var image = new Image();
+            image.src = "happy.png";
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.drawImage(image, -size / 2, -size / 2, size, size);
+            ctx.restore();
+
+            // Use Lissajous curve for animation
+            var a = 2;
+            var b = 3;
+            x = canvas.width/2 + Math.sin(a * angle) * canvas.width / 5;
+            y = canvas.height/2 + Math.cos(b * angle) * canvas.height / 5;
+            angle += angleSpeed;
+
+            requestAnimationFrame(draw);
+        }
+        canvas.addEventListener("mousedown", function () {
+            size *= .8;
+        });
+
+        draw();
+    </script>
+</body>
+</html>
