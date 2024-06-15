@@ -1,37 +1,161 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
-            const audioContext = new AudioContext();
-            const analyser = audioContext.createAnalyser();
-            const microphone = audioContext.createMediaStreamSource(stream);
-
-            analyser.smoothingTimeConstant = 0.8;
-            analyser.fftSize = 1024;
-            microphone.connect(analyser);
-
-            setInterval(() => {
-                const array = new Uint8Array(analyser.frequencyBinCount);
-                analyser.getByteFrequencyData(array);
-                let values = 0;
-                const length = array.length;
-
-                for (let i = 0; i < length; i++) {
-                    values += array[i];
-                }
-
-                const average = values / length;
-                    console.log(Math.round(average));
-                    document.getElementById("lvl").innerHTML = Math.round(average);
-                
-            }, 5);
-        }).catch(function(err) {
-            /* handle the error */
-        });
-    </script>
+    <title>Current Time</title>
+ 
 </head>
 <body>
-    <center><p id="lvl" style="font-size:200px"></p></center>
+
+
+    <div id="btn-container" class="btn-container"></div>
+    <style>
+        .btn-container {
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+        }
+        .button {
+            margin: 1%;
+            padding: 10% 20%;
+            border: none;
+            border-radius: 4px;
+            background-color: #e0e0e0;
+        }
+        .button:hover {
+            background-color: #ffc8fd;
+        }
+        .button.active {
+            background-color: #fe00f4;
+            box-shadow: 0 0 20px #fe00f4;
+        }
+    </style>
+
+    <h1>Current Time:</h1>
+        <p id="time"></p>
+        <p id="debug"></p>
+
+<!-- 
+    <div id="btn-container" class="btn-container">
+        <button onpointerdown ="toggleSound(0)"  class="button">Toggle Sound 1</button>
+        <button onpointerdown ="toggleSound(1)" class="button">Toggle Sound 2</button>
+    </div>
+    <div class="btn-container">
+        <button onpointerdown ="toggleSound(2)" class="button">Toggle Sound 3</button>
+        <button onpointerdown ="toggleSound(3)" class="button">Toggle Sound 4</button>
+        </div> -->
+    
+
+        <script>
+
+
+            var soundList = [
+                {   
+                    name:"pluck", amount: 4,
+                    secondDelay: 2, millisecondDivision: 1,
+                    active: false
+                },{ 
+                    name:"synth rise", amount: 1,
+                    secondDelay: 8, millisecondDivision: 1,
+                    active: false
+                },{ 
+                    name:"K1", amount: 1,
+                    secondDelay: 2, millisecondDivision: 2,
+                    active: false
+                },{ 
+                    name: "melodic", amount: 4,
+                    secondDelay: 1, millisecondDivision: 2.75,
+                    active: false
+                }
+            ];
+    
+            // Create buttons for each object on soundList
+            soundList.forEach(obj => {
+                var button = document.createElement("button");
+                button.textContent = obj.name;
+                button.setAttribute("onpointerdown", "toggleSound(" + soundList.indexOf(obj) + ")");
+                button.classList.add("button");
+                document.getElementById("btn-container").appendChild(button);
+                document.getElementById("btn-container").style.display = "grid";
+                document.getElementById("btn-container").style.gridTemplateColumns = "repeat(auto-fit, minmax(200px, 1fr))";
+            });
+            
+            
+            function generatePaths(obj){
+                obj.paths = [];
+                if (obj.amount > 1){
+                        obj.previousAudio = " ";
+                        for (var i = 1; i <= obj.amount; i++) {
+                            obj.paths.push("sounds/" + obj.name + " " + i + ".mp3");
+                        }
+                }else{
+                    obj.paths.push("sounds/" + obj.name + ".mp3");
+                }
+            }
+            
+            soundList.forEach(obj => {
+                if (obj.name) {
+                    generatePaths(obj);
+                }
+            });
+            
+            var hours, minutes, seconds, milliseconds;
+    
+            function updateTime() {
+                var date = new Date();
+                hours = date.getHours();
+                minutes = date.getMinutes();
+    
+                var tempSeconds = date.getSeconds(); 
+                if (seconds != tempSeconds){
+                }
+                seconds = tempSeconds;
+    
+    
+                var tempMilliseconds =  ("0" + date.getMilliseconds()).slice(-3).substring(0, 2);
+                if (milliseconds != tempMilliseconds) {
+                    milliseconds = tempMilliseconds;
+                    soundList.forEach(obj => {
+                        if (obj.active) {
+                            playSound(obj);
+                        }
+                    });
+                }
+                
+                // Format the time as HH:MM:SS.SS
+                var time = hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+                
+                // Update the text on the screen
+                document.getElementById("time").textContent = time;
+                
+            }
+            function getRandomIndex(list) {
+                return list[Math.floor(Math.random() * list.length)];
+            }
+            function playSound(obj) {
+                if ( seconds % obj.secondDelay === 0 && Math.floor ((1+ Number(milliseconds)) % ( Math.floor(100/obj.millisecondDivision) )) ==0){
+                    var audio;
+                    if (obj.paths.length>1) {
+                        do { audio = new Audio( getRandomIndex(obj.paths) );
+                        } while (audio.src === obj.previousAudio);
+                        obj.previousAudio = audio.src;
+                    } else {
+                        audio = new Audio( getRandomIndex(obj.paths) );
+                    }                
+                    audio.play();
+                }   
+            }
+            function toggleSound(index) {
+                soundList[index].active = !soundList[index].active;
+                if (soundList[index].active) {
+                    document.getElementsByClassName("button")[index].classList.add("active");
+                } else {
+                    document.getElementsByClassName("button")[index].classList.remove("active");
+                }
+            }
+    
+            setInterval(updateTime, 1);
+        </script>
+    
+
 </body>
 </html>
